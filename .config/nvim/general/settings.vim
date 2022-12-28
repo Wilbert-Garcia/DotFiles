@@ -1,41 +1,71 @@
-" set leader key
-"let g:mapleader = "\<Space>"
+" Set the leader key to `,`
+let mapleader=","
 
-syntax enable                           " Enables syntax highlighing
-"set hidden                              " Required to keep multiple buffers open multiple buffers
-set nowrap                              " Display long lines as just one line
-set encoding=utf-8                      " The encoding displayed
-set pumheight=10                        " Makes popup menu smaller
-set fileencoding=utf-8                  " The encoding written to file
-set ruler              			            " Show the cursor position all the time
-set cmdheight=2                         " More space for displaying messages
-"set iskeyword+=-                      	" treat dash separated words as a word text object"
-"set mouse=a                             " Enable your mouse
-set splitbelow                          " Horizontal splits will automatically be below
-set splitright                          " Vertical splits will automatically be to the right
-"set t_Co=256                            " Support 256 colors
-set conceallevel=0                      " So that I can see `` in markdown files
-"set tabstop=2                           " Insert 2 spaces for a tab
-"set shiftwidth=2                        " Change the number of space characters inserted for indentation
-"set smarttab                            " Makes tabbing smarter will realize you have 2 vs 4
-"set expandtab                           " Converts tabs to spaces
-"set smartindent                         " Makes indenting smart
-"set autoindent                          " Good auto indent
-set laststatus=0                        " Always display the status line
-set number                              " Line numbers
-set cursorline                          " Enable highlighting of the current line
-"set background=dark                     " tell vim what the background color looks like
-"set showtabline=2                       " Always show tabs
-"set noshowmode                          " We don't need to see things like -- INSERT -- anymore
-"set nobackup                            " This is recommended by coc
-"set nowritebackup                       " This is recommended by coc
-"set updatetime=300                      " Faster completion
-"set timeoutlen=500                      " By default timeoutlen is 1000 ms
-"set formatoptions-=cro                  " Stop newline continution of comments
-"set clipboard=unnamedplus               " Copy paste between vim and everything else
-"set autochdir                           " Your working directory will always be the same as your working directory
+" Enable synatx highlighting
+syntax enable
 
-au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
+" Show line numbers
+set number relativenumber
 
-" You can't stop me
-"cmap w!! w !sudo tee %
+"Set the command height to 2, to give more space for displauing messages
+set cmdheight=2
+
+" Highlight the current line and set the cursor line number to yellow
+set cursorline
+highlight CursorLine gui=underline guibg=none
+highlight CursorLineNr gui=none guifg=yellow
+
+" Use smart case for searches and ignore case if the search pattern contains no upper case characters
+set smartcase
+set ignorecase
+
+" Use terminal colors
+set termguicolors
+
+" Keep the cursor centered on the screen by always showing at least 8 lines above and below it 
+set scrolloff=8 
+
+" set colorcolumn=80                "
+" set signcolumn=yes                " auto
+
+" Use 2 spaces for a tab, and convert tabs to spaces
+set tabstop=2 softtabstop=2
+set expandtab                
+
+" set smarttab                      " its default but here just incase something acts up
+set shiftwidth=2                    " ^^
+
+" Enable smart indenting
+set smartindent 
+
+" Copy and paste between Neovim and other applications
+set clipboard=unnamedplus
+
+" Update the display faster, to improve the completion experience (default 4000)
+set updatetime=300
+
+" Open new splits at the bottom and right of the current split
+set splitbelow splitright
+
+" Always show the status line (Defaults in neovim)
+set laststatus=2
+" Custom statusline
+set statusline=%f\ %m\ %r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]
+" set inccommand = 'split'
+" set wildmode=longest,list,full   " No for now
+" set path+=**                     " DANGEROUS No for Now
+
+" Delete trailing whitespace when saving a file
+autocmd BufWritePre * %s/\s+$//e
+
+" au FileType * setlocal fo-=c fo-=r fo-=o "doesnt work
+
+" Disable automatic commenting on new lines
+autocmd BufEnter * set fo-=c fo-=r fo-=o 
+
+" Alias `S` to replace all occurrences of a pattern
+nnoremap S :%s//g<left><left>
+
+" Bind `<C-t>` to open a new tab
+nnoremap <silent> <C-t> :tabnew<CR>
+
